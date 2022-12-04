@@ -1,0 +1,44 @@
+<div class="container">
+  <div class="form">
+    <h2>Create an account</h2>
+
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <div class="field-group">
+        <div class="field w-40">
+          <%= f.label :name, class: 'label-form' %><br />
+          <%= f.text_field :name, autofocus: true, autocomplete: "name", placeholder: "John", class: 'input-form' %>
+        </div>
+        <div class="field w-60">
+          <%= f.label :surname, class: 'label-form' %><br />
+          <%= f.text_field :surname, autofocus: true, autocomplete: "surname", placeholder: "Doe", class: 'input-form' %>
+        </div>
+      </div>
+      <div class="field">
+        <%= f.label :nickname, class: 'label-form' %><br />
+        <%= f.text_field :nickname, autofocus: true, autocomplete: "nickname", placeholder: "john_doe", class: 'input-form' %>
+      </div>
+      <div class="field">
+        <%= f.label :email, class: 'label-form' %><br />
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "john.doe@who.com", class: 'input-form' %>
+      </div>
+      <div class="field">
+        <%= f.label :password, class: 'label-form' %>
+        <% if @minimum_password_length %>
+        <em>(<%= @minimum_password_length %> characters minimum)</em>
+        <% end %><br />
+        <%= f.password_field :password, autocomplete: "new-password", placeholder: "●●●●●●●●", class: 'input-form' %>
+      </div>
+      <div class="field">
+        <%= f.label :password_confirmation, class: 'label-form' %><br />
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "●●●●●●●●", class: 'input-form' %>
+      </div>
+      <div class="actions">
+        <%= f.submit "Sign up", class: "button-form" %>
+      </div>
+    <% end %>
+
+    <%= render "devise/shared/links" %>
+  </div>
+</div>
