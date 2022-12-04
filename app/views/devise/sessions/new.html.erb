@@ -1,26 +1,35 @@
-<h2>Log in</h2>
-
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
-
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+<div class="container">
+  <div class="form">
+    <div class="title-form">
+      <h2>Login</h2>
     </div>
-  <% end %>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <div class="field">
+        <%= f.label :email, class: 'label-form' %><br />
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "john.doe@who.com", class: 'input-form' %>
+      </div>
 
-  <div class="actions">
-    <%= f.submit "Log in" %>
+      <div class="field">
+        <%= f.label :password, class: 'label-form' %><br />
+        <%= f.password_field :password, autocomplete: "current-password", placeholder: "●●●●●●●●", class: 'input-form' %>
+      </div>
+      <div class="forgot-password-area">
+        <% forgot_password = true %>
+        <%= render :partial => "devise/shared/links", :locals => {forgot_password: forgot_password} %>
+      </div>
+
+      <% if devise_mapping.rememberable? %>
+        <div class="field">
+          <%= f.check_box :remember_me %>
+          <%= f.label :remember_me %>
+        </div>
+      <% end %>
+
+      <div class="actions">
+        <%= f.submit "Sign In", class: "button-form" %>
+        <p><%= render "devise/shared/links" %></p>
+      </div>
+    <% end %>
   </div>
-<% end %>
+</div>
 
-<%= render "devise/shared/links" %>
