@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   get '/', to: 'home#index'
   root to: "home#index"
 
-  resources :themes
+  resources :themes, only: [:index, :show]
   resources :posts
   resources :comments
 end
