@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_post, only: %i[ show update destroy ]
+  before_action :set_post, only: %i[ show update destroy liked ]
+  before_action :create_post_service, only: %i[ create update liked ]
 
   def index 
     @posts = Post.all 
@@ -10,19 +11,20 @@ class PostsController < ApplicationController
   end
 
   def create 
-    @post = Post.new(post_params)
-    if @post.save
+    unless @post_service.errors.present?
+      @post = @post_service.create_post(post_params)
       render "home/index", status: :created, location: @post
     else
-      render json: { error: 'One error has been ocurred' }, status: :unprocessable_entity
+      render json: @post_service.errors.uniq, status: :unprocessable_entity
     end
   end
 
   def update 
-    if @post.update(post_params)
+    unless @post_service.errors.present?
+      @post = @post_service.update_post(@post, post_params)
       render "home/index", status: :ok, location: @post
     else
-      render json: { error: 'One error has been ocurred' }, status: :unprocessable_entity
+      render json: @post_service.errors.uniq, status: :unprocessable_entity
     end
   end
 
@@ -34,6 +36,11 @@ class PostsController < ApplicationController
     end
   end
 
+  def liked
+    @post = @post_service.handle_like(params[:post_id], current_user, @post)
+    render "home/index", status: :no_content, location: @post if @post.present?
+  end
+
   private 
 
   def set_post
@@ -41,6 +48,14 @@ class PostsController < ApplicationController
   end
   
   def post_params
-    params.require(:post).permit(:title :description, :likes, :image_url, :theme_id, :user_id)
+    params.require(:post).permit(:title :description, :likes, :image_url, :theme_id, :user_id, :)
+  end
+
+  def create_post_service
+    @post_service = PostService.new(
+      post_params[:title],
+      post_params[:theme_id],
+      post_params[:user_id],
+    )
   end
 end
