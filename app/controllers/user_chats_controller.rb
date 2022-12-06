@@ -11,9 +11,9 @@ class UserChatsController < ApplicationController
   end
 
   def create 
-    unless @user_chat_service.errors.present?
+    if @user_chat_service.errors.blank?
       @user_chat = @user_chat_service.handle_create_user_chat
-      render_success("home/index", :created, @user_chat) if @user_chat.present?
+      render_success('home/index', :created, @user_chat) if @user_chat.present?
     else
       render_error(@user_chat_service.errors.uniq, :unprocessable_entity)
     end

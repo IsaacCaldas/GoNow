@@ -1,5 +1,5 @@
 class PostService 
-  attr_accessor :title :description, :image_url, :theme_id
+  attr_accessor :title, :description, :image_url, :theme_id
 
   def initialize(title, description, image_url, theme_id)
     @title = title
@@ -12,9 +12,9 @@ class PostService
     errors ||= []
     
     [
-      {condition: @title.blank?, message: "Title can't be blank."},
-      {condition: @theme_id.blank?, message: "Theme references can't be blank."},
-      {condition: theme_unexistent, message: "Unexistent theme."},
+      { condition: @title.blank?, message: "Title can't be blank." },
+      { condition: @theme_id.blank?, message: "Theme references can't be blank." },
+      { condition: theme_unexistent, message: 'Unexistent theme.' },
     ].each do |error|
       errors << error[:message] if error[:condition]
     end
@@ -23,14 +23,14 @@ class PostService
   end
 
   def theme_unexistent
-    theme = true
+    theme ||= true
     theme = Theme.find(@theme_id)
     !theme
   end
 
   def handle_create_or_update_post(post, params)
     # TODO: make a validation of params
-    if post 
+    if post
       post.update(params)
     else
       Post.create(
@@ -50,11 +50,11 @@ class PostService
     if user_post_like.present?
       user_post_like.liked ? post_likes -= 1 : post_likes += 1
       user_post_like.update(liked: !user_post_like.liked)
-    else  
+    else
       UserPostLike.create(user_id: current_user.id, post_id: post_id, liked: true)
       post_likes += 1
     end
 
     post.update(likes: post_likes)
   end
-end 
+end

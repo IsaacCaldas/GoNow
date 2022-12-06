@@ -4,7 +4,7 @@ class MessagesController < ApplicationController
   before_action :create_message_service, only: %i[ create destroy ]
 
   def create 
-    unless @message_service.errors.present?
+    if @message_service.errors.blank?
       @message = @message_service.handle_create_message
       render_success("home/index", :created, @message) if @message.present?
     else

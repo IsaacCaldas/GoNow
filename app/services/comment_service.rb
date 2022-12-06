@@ -1,4 +1,4 @@
-class CommentService 
+class CommentService
   attr_accessor :description, :main_comment_id, :post_id
 
   def initialize(description, main_comment_id, post_id)
@@ -11,10 +11,10 @@ class CommentService
     errors ||= []
     
     [
-      {condition: @description.blank?, message: "Description can't be blank."},
-      {condition: @post_id.blank?, message: "Post references can't be blank."},
-      {condition: post_unexistent, message: "Post references can't be blank."},
-      {condition: main_comment_unexistent, message: "Unexistent main comment"}
+      { condition: @description.blank?, message: "Description can't be blank." },
+      { condition: @post_id.blank?, message: "Post references can't be blank." },
+      { condition: post_unexistent, message: "Post references can't be blank." },
+      { condition: main_comment_unexistent, message: 'Unexistent main comment' }
     ].each do |error|
       errors << error[:message] if error[:condition]
     end
@@ -23,20 +23,20 @@ class CommentService
   end
 
   def post_unexistent
-    post = true
+    post ||= true
     post = Post.find(@post_id)
     !post
   end
 
   def main_comment_unexistent
-    comment = true
+    comment ||= true
     comment = Comment.find(@main_comment_id) if @main_comment_id
     !comment
   end
 
   def handle_create_or_update_comment(comment, params)
     # TODO: make a validation of params
-    if comment 
+    if comment
       comment.update(params)
     else
       Comment.create(
@@ -49,7 +49,7 @@ class CommentService
   end
 
   def handle_destroy_comment(comment)
-    user = 'owner' 
+    user = 'owner'
     user = 'admin' if current_user.admin && comment.user_id != current_user.id
     comment.update(description: "The comment has been removed by the #{user}.")
   end
@@ -61,11 +61,11 @@ class CommentService
     if user_comment_like.present?
       user_comment_like.liked ? comment_likes -= 1 : comment_likes += 1
       user_comment_like.update(liked: !user_comment_like.liked)
-    else  
+    else
       UserCommentLike.create(user_id: current_user.id, comment_id: comment_id, liked: true)
       comment_likes += 1
     end
 
     comment.update(likes: comment_likes)
   end
-end 
+end

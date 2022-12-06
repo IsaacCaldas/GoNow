@@ -10,8 +10,8 @@ class User < ApplicationRecord
   has_many :user_comment_likes
   has_many :user_chats
   has_many :messages
-  
+
   def fullname
-    "#{self.name} #{self.surname}"
+    "#{name} #{surname}"
   end
 end

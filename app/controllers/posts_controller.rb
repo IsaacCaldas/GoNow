@@ -11,7 +11,7 @@ class PostsController < ApplicationController
   end
 
   def create 
-    unless @post_service.errors.present?
+    if @post_service.errors.blank?
       @post = @post_service.handle_create_or_update_post
       render_success("home/index", :created, @post) if @post.present?
     else
@@ -20,7 +20,7 @@ class PostsController < ApplicationController
   end
 
   def update 
-    unless @post_service.errors.present?
+    if @post_service.errors.blank?
       @post = @post_service.handle_create_or_update_post(@post, post_params)
       render_success("home/index", :ok, @post) if @post.present?
     else

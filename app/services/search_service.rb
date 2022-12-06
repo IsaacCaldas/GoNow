@@ -1,2 +1,2 @@
-class SearchService 
+class SearchService
 end

@@ -1,4 +1,4 @@
-class MessageService 
+class MessageService
   attr_accessor :content, :chat_id
 
   def initialize(content, chat_id)
@@ -8,11 +8,11 @@ class MessageService
 
   def errors
     errors ||= []
-  
+
     [
-      {condition: @content.blank?, message: "Message needs a content."},
-      {condition: @chat_id.blank?, message: "Chat references can't be blank."},
-      {condition: chat_unexistent, message: "Unexistent chat."}
+      { condition: @content.blank?, message: 'Message needs a content.' },
+      { condition: @chat_id.blank?, message: "Chat references can't be blank." },
+      { condition: chat_unexistent, message: 'Unexistent chat.' }
     ].each do |error|
       errors << error[:message] if error[:condition]
     end
@@ -21,7 +21,7 @@ class MessageService
   end
 
   def chat_unexistent
-    chat = true
+    chat ||= true
     chat = Chat.find(@chat_id)
     !chat
   end
@@ -34,4 +34,4 @@ class MessageService
   def handle_destroy_message(message)
     message.update(content: 'The message has been removed')
   end
-end 
+end

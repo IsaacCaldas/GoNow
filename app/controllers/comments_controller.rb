@@ -12,7 +12,7 @@ class CommentsController < ApplicationController
 
   def create 
     # CRIAR SERVICES PARA VER SE O COMENTÁRIO É VALIDO, o mesmo pro POST
-    unless @comment_service.errors.present?
+    if @comment_service.errors.blank?
       @comment = @comment_service.handle_create_or_update_comment
       render_success("home/index", :created, @comment) if @comment.present?
     else
@@ -21,7 +21,7 @@ class CommentsController < ApplicationController
   end
 
   def update 
-    unless @comment_service.errors.present?
+    if @comment_service.errors.blank?
       @comment = @comment_service.handle_create_or_update_comment(@comment, comment_params)
       render_success("home/index", :ok, @comment) if @comment.present?
     else
