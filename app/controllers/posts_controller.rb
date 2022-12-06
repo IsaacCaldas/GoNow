@@ -12,7 +12,7 @@ class PostsController < ApplicationController
 
   def create 
     unless @post_service.errors.present?
-      @post = @post_service.handle_create_or_update_post(nil, post_params)
+      @post = @post_service.handle_create_or_update_post
       render_success("home/index", :created, @post) if @post.present?
     else
       render_error(@post_service.errors.uniq, :unprocessable_entity)
@@ -57,14 +57,15 @@ class PostsController < ApplicationController
   end
   
   def post_params
-    params.require(:post).permit(:title :description, :likes, :image_url, :theme_id, :user_id)
+    params.require(:post).permit(:title :description, :image_url, :theme_id)
   end
 
   def create_post_service
     @post_service = PostService.new(
       post_params[:title],
+      post_params[:description],
+      post_params[:image_url],
       post_params[:theme_id],
-      post_params[:user_id],
     )
   end
 end

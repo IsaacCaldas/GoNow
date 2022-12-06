@@ -13,7 +13,7 @@ class CommentsController < ApplicationController
   def create 
     # CRIAR SERVICES PARA VER SE O COMENTÁRIO É VALIDO, o mesmo pro POST
     unless @comment_service.errors.present?
-      @comment = @comment_service.handle_create_or_update_comment(nil, comment_params)
+      @comment = @comment_service.handle_create_or_update_comment
       render_success("home/index", :created, @comment) if @comment.present?
     else
       render_error(@comment_service.errors.uniq, :unprocessable_entity)
@@ -58,14 +58,13 @@ class CommentsController < ApplicationController
   end
   
   def comment_params
-    params.require(:comment).permit(:description, :likes, :main_comment_id, :user_id)
+    params.require(:comment).permit(:description, :main_comment_id)
   end
 
   def create_comment_service
     @comment_service = CommentService.new(
       comment_params[:description],
       comment_params[:main_comment_id],
-      comment_params[:user_id],
       params[:post_id]
     )
   end

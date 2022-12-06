@@ -40,11 +40,12 @@ gem 'awesome-pry'
 gem 'devise'
 gem 'env'
 gem 'pry'
+gem 'rubocop'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  gem "tty-spinner"
+  gem 'tty-spinner'
 end
 
 group :development do

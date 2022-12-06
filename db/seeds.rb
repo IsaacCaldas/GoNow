@@ -1,6 +1,7 @@
 user = User.create(email: "isaac@test.com", password: "123123", name: "Isaac", surname: "Tavares Caldas Gonçalves", nickname: "isaac_test")
 
 themes = [
+  {name: "Default"},
   {name: "Abstract"},
   {name: "Animal"},
   {name: "Anime"},

@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  content: MyText
+  viewed: 2022-12-06 14:52:33
+  chat: one
+  user: one
+
+two:
+  content: MyText
+  viewed: 2022-12-06 14:52:33
+  chat: two
+  user: two

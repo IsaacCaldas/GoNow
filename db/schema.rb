@@ -10,10 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_12_06_133549) do
+ActiveRecord::Schema.define(version: 2022_12_06_175233) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "chats", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "comments", force: :cascade do |t|
     t.string "description"
@@ -26,6 +31,17 @@ ActiveRecord::Schema.define(version: 2022_12_06_133549) do
     t.index ["main_comment_id"], name: "index_comments_on_main_comment_id"
     t.index ["post_id"], name: "index_comments_on_post_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.text "content"
+    t.datetime "viewed"
+    t.bigint "chat_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chat_id"], name: "index_messages_on_chat_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -45,6 +61,15 @@ ActiveRecord::Schema.define(version: 2022_12_06_133549) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "user_chats", force: :cascade do |t|
+    t.bigint "chat_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chat_id"], name: "index_user_chats_on_chat_id"
+    t.index ["user_id"], name: "index_user_chats_on_user_id"
   end
 
   create_table "user_comment_likes", force: :cascade do |t|
@@ -85,8 +110,12 @@ ActiveRecord::Schema.define(version: 2022_12_06_133549) do
 
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
+  add_foreign_key "messages", "chats"
+  add_foreign_key "messages", "users"
   add_foreign_key "posts", "themes"
   add_foreign_key "posts", "users"
+  add_foreign_key "user_chats", "chats"
+  add_foreign_key "user_chats", "users"
   add_foreign_key "user_comment_likes", "comments"
   add_foreign_key "user_comment_likes", "users"
   add_foreign_key "user_post_likes", "posts"
