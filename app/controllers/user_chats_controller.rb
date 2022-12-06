@@ -34,10 +34,10 @@ class UserChatsController < ApplicationController
   end
 
   def user_chat_params
-    params.require(:user_chat).permit(:chat_id, :receiver_id)
+    params.require(:user_chat).permit(:receiver_id)
   end
 
   def create_user_chat_service
-    @user_chat_service = UserChatService.new(message_params[:receiver_id])
+    @user_chat_service = UserChatService.new(user_chat_params[:receiver_id])
   end
 end
