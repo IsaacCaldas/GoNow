@@ -9,28 +9,41 @@ class PostService
 
   def errors
     errors ||= []
-    possible_errors = [
+    
+    [
       {condition: @title.blank?, message: "Title can't be blank."},
       {condition: @theme_id.blank?, message: "Theme references can't be blank."},
+      {condition: theme_unexistent, message: "Unexistent theme."},
       {condition: @user_id.blank?, message: "User references can't be blank."},
-    ]
-
-    possible_errors.each do |error|
+      {condition: user_unexistent, message: "Unexistent user."}
+    ].each do |error|
       errors << error[:message] if error[:condition]
     end
 
     errors
   end
 
-  def create_post(post_params)
-    Post.new(post_params)
+  def theme_unexistent
+    theme = true
+    theme = Theme.find(@theme_id)
+    !theme
   end
 
-  def update_post(post, post_params)
-    post.update(post_params)
+  def user_unexistent
+    user = true
+    user = User.find(@user_id)
+    !user  end
+
+  def handle_create_or_update_post(post, params)
+    # TODO: make a validation of params
+    if post 
+      post.update(params)
+    else
+      Post.new(params)
+    end
   end
 
-  def handle_like(post_id, current_user, post)
+  def handle_like(post_id, post)
     user_post_like = UserPostLike.where(user_id: current_user.id, post_id: post_id).first
     post_likes = post.likes
 

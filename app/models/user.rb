@@ -4,6 +4,11 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_many :posts 
+  has_many :user_post_likes
+  has_many :comments
+  has_many :user_comment_likes
+  
   def fullname
     "#{self.name} #{self.surname}"
   end

@@ -6,8 +6,11 @@ Rails.application.routes.draw do
   root to: "home#index"
 
   resources :themes, only: [:index, :show]
+  
   resources :posts do 
     post '/liked', to: 'post#liked'
-    resources :comments
+    resources :comments do 
+      post '/liked', to: 'comment#liked'
+    end
   end
 end

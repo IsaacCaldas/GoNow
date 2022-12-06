@@ -12,43 +12,52 @@ class PostsController < ApplicationController
 
   def create 
     unless @post_service.errors.present?
-      @post = @post_service.create_post(post_params)
-      render "home/index", status: :created, location: @post
+      @post = @post_service.handle_create_or_update_post(nil, post_params)
+      render_success("home/index", :created, @post) if @post.present?
     else
-      render json: @post_service.errors.uniq, status: :unprocessable_entity
+      render_error(@post_service.errors.uniq, :unprocessable_entity)
     end
   end
 
   def update 
     unless @post_service.errors.present?
-      @post = @post_service.update_post(@post, post_params)
-      render "home/index", status: :ok, location: @post
+      @post = @post_service.handle_create_or_update_post(@post, post_params)
+      render_success("home/index", :ok, @post) if @post.present?
     else
-      render json: @post_service.errors.uniq, status: :unprocessable_entity
+      render_error(@post_service.errors.uniq, :unprocessable_entity)
     end
   end
 
   def destroy 
+    # se apagar o post tem que apagar os comentários
     if @post.destroy
-      render "home/index", status: :no_content, location: @post
+      render_success("home/index", :no_content, @post) if @post.present?
     else
-      render json: { error: 'One error has been ocurred' }, status: :unprocessable_entity
+      render_error({ error: 'One error has been ocurred' }, :unprocessable_entity)
     end
   end
 
   def liked
-    @post = @post_service.handle_like(params[:post_id], current_user, @post)
-    render "home/index", status: :no_content, location: @post if @post.present?
+    @post = @post_service.handle_like(params[:post_id], @post)
+    render_success("home/index", :no_content, @post) if @post.present?
   end
 
   private 
+
+  def render_success(url, status, data)
+    render url, status: status, location: data
+  end
+
+  def render_error(error, status)
+    render json: error, status: status
+  end
 
   def set_post
     @post = Post.find(params[:id])
   end
   
   def post_params
-    params.require(:post).permit(:title :description, :likes, :image_url, :theme_id, :user_id, :)
+    params.require(:post).permit(:title :description, :likes, :image_url, :theme_id, :user_id)
   end
 
   def create_post_service
