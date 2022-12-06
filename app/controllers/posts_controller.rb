@@ -31,7 +31,7 @@ class PostsController < ApplicationController
   def destroy 
     # se apagar o post tem que apagar os comentários
     if @post.destroy
-      render_success("home/index", :no_content, @post) if @post.present?
+      render_success("home/index", :no_content, nil)
     else
       render_error({ error: 'One error has been ocurred' }, :unprocessable_entity)
     end

@@ -63,8 +63,8 @@ class CommentService
     comment_likes = comment.likes
 
     if user_comment_like.present?
-      user_comment_like.update(liked: !user_comment_like.liked)
       user_comment_like.liked ? comment_likes -= 1 : comment_likes += 1
+      user_comment_like.update(liked: !user_comment_like.liked)
     else  
       UserCommentLike.new(user_id: current_user.id, comment_id: comment_id, liked: true)
       comment_likes += 1

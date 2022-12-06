@@ -32,7 +32,8 @@ class PostService
   def user_unexistent
     user = true
     user = User.find(@user_id)
-    !user  end
+    !user  
+  end
 
   def handle_create_or_update_post(post, params)
     # TODO: make a validation of params
@@ -48,8 +49,8 @@ class PostService
     post_likes = post.likes
 
     if user_post_like.present?
-      user_post_like.update(liked: !user_post_like.liked)
       user_post_like.liked ? post_likes -= 1 : post_likes += 1
+      user_post_like.update(liked: !user_post_like.liked)
     else  
       UserPostLike.new(user_id: current_user.id, post_id: post_id, liked: true)
       post_likes += 1
