@@ -1,12 +1,12 @@
 class MessagesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_message, only: %i[ destroy ]
-  before_action :create_message_service, only: %i[ create destroy ]
+  before_action :set_message, only: %i[destroy]
+  before_action :create_message_service, only: %i[create destroy]
 
-  def create 
+  def create
     if @message_service.errors.blank?
       @message = @message_service.handle_create_message
-      render_success("home/index", :created, @message) if @message.present?
+      render_success('home/index', :created, @message) if @message.present?
     else
       render_error(@message_service.errors.uniq, :unprocessable_entity)
     end
@@ -16,7 +16,7 @@ class MessagesController < ApplicationController
     @message_service.handle_destroy_message(@message)
   end
 
-  private 
+  private
 
   def render_success(url, status, data)
     render url, status: status, location: data
@@ -26,7 +26,7 @@ class MessagesController < ApplicationController
     render json: error, status: status
   end
 
-  def set_message 
+  def set_message
     @message = Message.find(params[:id])
   end
 

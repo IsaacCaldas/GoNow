@@ -86,6 +86,7 @@ input:focus {
 .form .label-form {
   font-weight: bold;
   font-size: 0.85rem;
+  color: #1f1f1f;
 }
 .form .input-form {
   /* background-color: #efefef; */

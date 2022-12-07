@@ -10,20 +10,20 @@
       <div class="field-group">
         <div class="field w-40 pr-4">
           <%= f.label :name, class: 'label-form' %><br />
-          <%= f.text_field :name, autofocus: true, autocomplete: "name", placeholder: "John", class: 'input-form' %>
+          <%= f.text_field :name, autofocus: true, autocomplete: "name", minlength: "3", pattern: "^[^\s]+(\s+[^\s]+)*$", placeholder: "John", required: true, class: 'input-form' %>
         </div>
         <div class="field w-60">
           <%= f.label :surname, class: 'label-form' %><br />
-          <%= f.text_field :surname, autofocus: true, autocomplete: "surname", placeholder: "Doe", class: 'input-form' %>
+          <%= f.text_field :surname, autofocus: true, autocomplete: "surname", minlength: "3", pattern: "^[^\s]+(\s+[^\s]+)*$", placeholder: "Doe", required: true, class: 'input-form' %>
         </div>
       </div>
       <div class="field">
-        <%= f.label :nickname, class: 'label-form' %><br />
-        <%= f.text_field :nickname, autofocus: true, autocomplete: "nickname", placeholder: "john_doe", class: 'input-form' %>
+        <%= f.label :username, class: 'label-form' %><br />
+        <%= f.text_field :username, autofocus: true, autocomplete: "username", minlength: "3", pattern: "^[^\s]+(\s+[^\s]+)*$", placeholder: "john_doe", required: true, class: 'input-form' %>
       </div>
       <div class="field">
         <%= f.label :email, class: 'label-form' %><br />
-        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "john.doe@who.com", class: 'input-form' %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "john.doe@who.com", required: true,  class: 'input-form' %>
       </div>
       <div class="field-group">
         <div class="field w-50 pr-4">

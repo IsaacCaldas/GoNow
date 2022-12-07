@@ -3,7 +3,8 @@ user = User.create(
   password: '123123',
   name: 'Isaac',
   surname: 'Tavares Caldas Gonçalves',
-  nickname: 'isaac_test'
+  username: 'isaac_test',
+  admin: true
 )
 
 themes = [

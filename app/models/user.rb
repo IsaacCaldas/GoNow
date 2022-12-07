@@ -14,4 +14,8 @@ class User < ApplicationRecord
   def fullname
     "#{name} #{surname}"
   end
+
+  def self.handle_update_username(current_user)
+    current_user.update(username: current_user.username.insert(0, '@'))
+  end
 end

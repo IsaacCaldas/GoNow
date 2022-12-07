@@ -1,16 +1,16 @@
 class UserChatsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_user_chat, only: %i[ show ]
-  before_action :create_user_chat_service, only: %i[ create ]
+  before_action :set_user_chat, only: %i[show]
+  before_action :create_user_chat_service, only: %i[create]
 
-  def index 
+  def index
     @user_chats = UserChat.where(user_id: current_user.id)
   end
 
-  def show 
+  def show
   end
 
-  def create 
+  def create
     if @user_chat_service.errors.blank?
       @user_chat = @user_chat_service.handle_create_user_chat
       render_success('home/index', :created, @user_chat) if @user_chat.present?
@@ -19,7 +19,7 @@ class UserChatsController < ApplicationController
     end
   end
 
-  private 
+  private
 
   def render_success(url, status, data)
     render url, status: status, location: data
@@ -29,7 +29,7 @@ class UserChatsController < ApplicationController
     render json: error, status: status
   end
 
-  def set_user_chat 
+  def set_user_chat
     @user_chat = UserChat.find(params[:id])
   end
 

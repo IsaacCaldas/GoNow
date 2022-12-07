@@ -1,4 +1,4 @@
-class PostService 
+class PostService
   attr_accessor :title, :description, :image_url, :theme_id
 
   def initialize(title, description, image_url, theme_id)
@@ -10,11 +10,11 @@ class PostService
 
   def errors
     errors ||= []
-    
+
     [
       { condition: @title.blank?, message: "Title can't be blank." },
       { condition: @theme_id.blank?, message: "Theme references can't be blank." },
-      { condition: theme_unexistent, message: 'Unexistent theme.' },
+      { condition: theme_unexistent, message: 'Unexistent theme.' }
     ].each do |error|
       errors << error[:message] if error[:condition]
     end
@@ -33,13 +33,8 @@ class PostService
     if post
       post.update(params)
     else
-      Post.create(
-        title: @title,
-        description: @description,
-        image_url: @image_url,
-        theme_id: @theme_id,
-        user_id: current_user.id
-      )
+      params[:user_id] = current_user.id
+      Post.create(params)
     end
   end
 

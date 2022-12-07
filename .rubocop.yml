@@ -1,0 +1,48 @@
+
+AllCops:
+  NewCops: enable
+  Exclude:
+    - 'bin/*'
+    - 'config/environments/*'
+    - 'config/puma.rb'
+    - 'db/**/**/*'
+    - 'tmp/**/*'
+    - 'vendor/**/*'
+    - '.git/**/*'
+    - 'Gemfile'
+
+Layout/LineLength:
+  Exclude:
+    - 'config/initializers/devise.rb'
+
+Lint/EmptyClass:
+  Enabled: false
+
+Lint/UselessAssignment:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/CommandLiteral:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/EmptyMethod:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/HashSyntax:
+  Enabled: false
+
+Style/RedundantFetchBlock: 
+  Exclude: 
+    - ''
+
+Style/StringLiterals:
+  Exclude: 
+    - 'config/puma.rb'

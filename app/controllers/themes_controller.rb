@@ -1,21 +1,21 @@
 class ThemesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_theme, only: %i[ show destroy ]
+  before_action :set_theme, only: %i[show destroy]
 
-  def index 
+  def index
     @themes = Theme.all
   end
 
-  def show 
+  def show
   end
 
   def destroy
     theme_service = ThemeService.new(@theme, @theme_id)
     theme_service.handle_destroy_theme
-    render "home/index", status: :no_content, location: nil
+    render 'home/index', status: :no_content, location: nil
   end
 
-  private 
+  private
 
   def set_theme
     @theme = Theme.find(params[:id])

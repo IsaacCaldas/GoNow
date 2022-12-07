@@ -25,17 +25,17 @@ class UserChatService
   end
 
   def handle_create_user_chat
-    unless chat_already_exist
-      chat = Chat.create!
-      @chat_id = chat.id
+    return if chat_already_exist
 
-      user_chats_to_create = [
-        { chat_id: @chat_id, user_id: current_user.id },
-        { chat_id: @chat_id, user_id: @receiver_id }
-      ]
+    chat = Chat.create!
+    @chat_id = chat.id
 
-      UserChat.create(user_chats_to_create)
-    end
+    user_chats_to_create = [
+      { chat_id: @chat_id, user_id: current_user.id },
+      { chat_id: @chat_id, user_id: @receiver_id }
+    ]
+
+    UserChat.create(user_chats_to_create)
   end
 
   private

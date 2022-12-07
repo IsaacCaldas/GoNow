@@ -9,7 +9,7 @@ class CommentService
 
   def errors
     errors ||= []
-    
+
     [
       { condition: @description.blank?, message: "Description can't be blank." },
       { condition: @post_id.blank?, message: "Post references can't be blank." },
@@ -39,12 +39,8 @@ class CommentService
     if comment
       comment.update(params)
     else
-      Comment.create(
-        description: @description,
-        main_comment_id: @main_comment_id,
-        post_id: @post_id,
-        user_id: current_user.id
-      )
+      params[:user_id] = current_user.id
+      Comment.create(params)
     end
   end
 
