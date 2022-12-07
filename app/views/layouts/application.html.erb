@@ -16,6 +16,26 @@
     <% if alert %>
       <p class="alert alert-danger"><%= alert %></p>
     <% end %>
-    <%= yield %>
+    <% unless current_user %>
+      <%= yield %>
+    <% else %>
+      <div class="container">
+        <section class="left-header">
+          <ul>
+            <li><a>Feed</a></li>
+            <li><a>Messages</a></li>
+            <li><a>New post</a></li>
+            <li><a>Settings</a></li>
+            <div class="line-area">
+              <div class="line"></div>
+            </div>
+            <li class="logout"><a>Logout</a></li>
+          </ul>
+        </section>
+        <main class="main-content">
+          <%= yield %>
+        </main>
+      </div>
+    <% end %>
   </body>
 </html>
