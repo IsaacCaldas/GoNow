@@ -5,6 +5,7 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">    
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
@@ -22,14 +23,29 @@
       <div class="container">
         <section class="left-header">
           <ul>
-            <li><a>Feed</a></li>
-            <li><a>Messages</a></li>
-            <li><a>New post</a></li>
-            <li><a>Settings</a></li>
+            <li>
+              <i class="fa-solid fa-bars"></i>
+              <a>Feed</a>
+            </li>
+            <li>
+              <i class="fa-regular fa-comment"></i>
+              <a>Messages</a>
+            </li>
+            <li>
+              <i class="fa-solid fa-plus"></i>
+              <a>New post</a>
+            </li>
+            <li>
+              <i class="fa-solid fa-sliders"></i>
+              <a>Settings</a>
+            </li>
             <div class="line-area">
               <div class="line"></div>
             </div>
-            <li class="logout"><a>Logout</a></li>
+            <li class="logout">
+              <i class="fa-solid fa-arrow-right-from-bracket"></i>
+              <%= link_to :Logout, destroy_user_session_path, :method => :delete, class: 'logout' %>
+            </li>
           </ul>
         </section>
         <main class="main-content">
